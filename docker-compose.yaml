@@ -1,0 +1,63 @@
+services:
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    volumes:
+      - "./gateway:/src/app"
+    working_dir: "/src/app"
+    ports:
+      - 4000:4000
+      - 9229:9229
+    command: npm run start
+    depends_on:
+      - postgres
+      - rabbitmq
+    restart: always
+
+  tasks:
+    build: ./tasks
+    container_name: tasks
+    working_dir: "/src/app"
+    volumes:
+      - "./tasks:/src/app"
+    command: npm run start
+    depends_on:
+      - postgres
+      - rabbitmq
+      - gateway
+    restart: always
+
+  field-values: 
+    build: ./field-values
+    container_name: field-values
+    command: ./main
+    depends_on: 
+    - postgres 
+    - rabbitmq
+    - gateway
+
+  postgres:
+    container_name: postgres
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    restart: always
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3-management
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+volumes:
+  pgdata:
+

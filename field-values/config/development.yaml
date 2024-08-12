@@ -1,0 +1,3 @@
+env: "development"
+database_url: "host=postgres port=5432 user=postgres password=root dbname=tasks sslmode=disable"
+rabbit_mq: "amqp://guest:guest@rabbitmq:5672/"
