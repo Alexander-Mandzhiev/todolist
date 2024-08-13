@@ -1,3 +1,4 @@
+import { TaskEnumValues, TaskIntValues, TaskStrValues } from '@prisma/client';
 import { IsArray, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 import { TASK_RULE_LENGTH } from "src/config/util";
 
@@ -27,6 +28,8 @@ export class TaskDto extends StatusIdDto {
     @IsOptional()
     @IsString()
     readonly description?: string
+
+    readonly data: FieldValuesDTO[]
 }
 
 export class IdTaskDto extends StatusIdDto {
@@ -45,4 +48,15 @@ export class UpdateOrderDto extends StatusIdDto {
     @IsOptional()
     @IsArray()
     readonly ids?: [string]
+}
+
+
+
+export class FieldValuesDTO {
+    @IsOptional()
+    value: number | string
+
+    @IsNotEmpty()
+    @IsString()
+    taskFieldId: string
 }

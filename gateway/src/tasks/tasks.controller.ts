@@ -18,15 +18,15 @@ export class TasksController {
   @UsePipes(new ValidationPipe())
   @HttpCode(HttpStatus.OK)
   @Post()
-  create(@CurrentUser('id') userId: string, @Body() dto: TaskDto) {
-    return this.tasksService.create(userId, dto);
+  async create(@CurrentUser('id') userId: string, @Body() dto: TaskDto) {
+    return await this.tasksService.create(userId, dto);
   }
 
   @ApiOkResponse({ type: [TasksResponse] })
   @HttpCode(HttpStatus.OK)
   @Get(':project_id/:status_id')
-  findAll(@CurrentUser('id') userId: string, @Param('project_id') projectId: string, @Param('status_id') statusId: string) {
-    return this.tasksService.findAll(userId, projectId, statusId);
+  async findAll(@CurrentUser('id') userId: string, @Param('project_id') projectId: string, @Param('status_id') statusId: string) {
+    return await this.tasksService.findAll(userId, projectId, statusId);
   }
 
   @ApiOkResponse({ type: TasksResponse })

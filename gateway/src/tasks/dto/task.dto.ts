@@ -1,6 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsArray, IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import { IsArray, IsNotEmpty, IsOptional, IsString, Length, Validate } from 'class-validator';
 import { TASK_RULE_LENGTH } from "src/config/util";
+import { IsNumberOrString } from "src/config/validation";
 
 
 export class StatusIdDto {
@@ -28,6 +29,21 @@ export class TaskDto extends StatusIdDto {
     @IsOptional()
     @IsString()
     readonly description?: string
+
+    @ApiProperty({ description: 'Значение полей задачи', example: "{}" })
+    readonly data: FieldValuesDTO[]
+}
+
+export class FieldValuesDTO {
+    @ApiProperty({ description: 'Значение поля задачи', example: "Исполнитель. В случае дорабвления значения из списка, берём id поля - clycqvk6u0001ore3c4smayhi" })
+    @IsOptional()
+    @Validate(IsNumberOrString)
+    value: number | string
+
+    @ApiProperty({ description: 'Уникальный идентификатор на поле задачи', example: "clxfvplou0001lbfs22szxu7v" })
+    @IsNotEmpty()
+    @IsString()
+    taskFieldId: string
 }
 
 export class UpdateOrderDto extends StatusIdDto {

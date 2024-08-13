@@ -94,9 +94,15 @@ export type SandingTaskStatusId = SandingTaskStatus & {
     readonly id?: string
 }
 
+export type FieldValues = {
+    value: number | string
+    taskFieldId: string
+}
+
 export type SandingTask = {
     readonly name?: string
     readonly description?: string
+    readonly data: FieldValues[]
 }
 
 export type CreateTaskDto = SandingTaskStatus & SandingTask

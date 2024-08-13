@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpCode, HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, HttpCode, HttpStatus, UsePipes, ValidationPipe } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { IdTaskDto, StatusIdDto, TaskDto, UpdateOrderDto, UpdateTaskDto } from './dto/task.dto';
 import { MessagePattern, Payload } from '@nestjs/microservices';
